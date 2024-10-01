@@ -8,10 +8,17 @@
 #include <nlohmann/json.hpp>
 #include <cctype>
 #include <regex>
+#include <curl/curl.h>
+#include <thread>   // Для std::this_thread::sleep_for
+#include <chrono>   // Для std::chrono
 
 #define good 	0
 #define error 	1
 #define ald 	2
+
+// g++ -o cve main.cpp  -lcurl
+// ./cve 1 (3) 
+
 
 namespace fs = std::filesystem;
 using json = nlohmann::json;
@@ -52,6 +59,52 @@ struct PackageInfo {
     double cvssV3_0_baseScore;
 };*/
 // -----------------------------------------------------------------------------------------------------------------------------
+
+
+// Функция для записи данных в файл
+size_t WriteCallback(void* contents, size_t size, size_t nmemb, FILE* userp) {
+    size_t totalSize = size * nmemb;
+    fwrite(contents, size, nmemb, userp);
+    return totalSize;
+}
+
+// Функция для загрузки файла
+bool downloadFile(const std::string& url, const std::string& outputPath) {
+    CURL* curl;
+    FILE* file;
+    CURLcode res;
+
+    curl = curl_easy_init();
+    if (curl) {
+        file = fopen(outputPath.c_str(), "wb");
+        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, file);
+        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+        res = curl_easy_perform(curl);
+        fclose(file);
+        curl_easy_cleanup(curl);
+        return (res == CURLE_OK);
+    }
+    return false;
+}
+
+// Функция для распаковки ZIP-файла с помощью команды unzip
+void unzipFile(const std::string& zipFilePath) {
+    std::string command = "unzip " + zipFilePath;
+    system(command.c_str());
+}
+
+// Функция для отображения анимации загрузки
+void showLoadingAnimation() {
+    const char* animationChars = "|/-\\";
+    while (true) {
+        for (int i = 0; i < 4; ++i) {
+            std::cout << "\rDownloading... " << animationChars[i] << std::flush;
+            std::this_thread::sleep_for(std::chrono::milliseconds(200));
+        }
+    }
+}
 
 void fillPackageInfo(const json& j, std::vector<PackageInfo>& lib) {
     // Проверка существования контейнеров
@@ -113,94 +166,6 @@ void fillPackageInfo(const json& j, std::vector<PackageInfo>& lib) {
             lib.push_back(pkgInfo);
         }
     }
-}
-
-// Функция для извлечения данных из JSON и записи их в файл
-/*void extractAndWriteToFile(const json& j, const std::string& filename) {
-    if (j.contains("containers") && 
-        j["containers"].contains("cna") && 
-        j["containers"]["cna"].contains("affected")) {
-
-        // Открываем файл для добавления (append mode)
-        std::ofstream outFile(filename, std::ios_base::app);
-
-        if (!outFile.is_open()) {
-            std::cerr << "Error: Could not open the file " << filename << std::endl;
-            return;
-        }
-
-        for (const auto& affected : j["containers"]["cna"]["affected"]) {
-            PackageInfo pkgInfo;
-
-            // Извлечение данных
-            if (j.contains("cveId")) {
-                pkgInfo.cveId = j["cveId"].get<std::string>();
-            }
-            if (affected.contains("product")) {
-                pkgInfo.product = affected["product"].get<std::string>();
-            }
-            if (affected.contains("versions")) {
-                for (const auto& version : affected["versions"]) {
-                    if (version.contains("version")) {
-                        pkgInfo.versions.push_back(version["version"].get<std::string>());
-                    }
-                }
-            }
-            if (j.contains("cwe")) {
-                if (!j["cwe"].empty() && j["cwe"][0].contains("id")) {
-                    pkgInfo.cweId = j["cwe"][0]["id"].get<std::string>();
-                }
-            }
-            if (j.contains("cvssV3")) {
-                if (j["cvssV3"].contains("baseScore")) {
-                    pkgInfo.cvssV3_0_baseScore = j["cvssV3"]["baseScore"].get<double>();
-                }
-            }
-
-            // Запись данных в файл
-            outFile << "CVE ID: " << pkgInfo.cveId << std::endl;
-            outFile << "Product: " << pkgInfo.product << std::endl;
-            outFile << "Versions: ";
-            for (size_t i = 0; i < pkgInfo.versions.size(); ++i) {
-                outFile << pkgInfo.versions[i];
-                if (i != pkgInfo.versions.size() - 1) {
-                    outFile << ", ";
-                }
-            }
-            outFile << std::endl;
-            outFile << "CWE ID: " << pkgInfo.cweId << std::endl;
-            outFile << "CVSS v3.0 Base Score: " << pkgInfo.cvssV3_0_baseScore << std::endl;
-            outFile << "------------------------" << std::endl;
-        }
-
-        // Закрываем файл
-        outFile.close();
-    }
-}*/
-
-
-void showDataCve(PackageInfo& pkg) {
-	// Выводим данные
-        std::cout << "Product: " << pkg.name << "\n";
-        std::cout << "Vendor: " << pkg.vendor << "\n";
-        std::cout << "Date Public: " << pkg.datePublic << "\n";
-        std::cout << "CVSS v3.1: " << pkg.cvssV3_1 << "\n";
-        std::cout << "Versions:\n";
-        for (const auto& ver : pkg.versions) {
-            std::cout << "  - Version: " << ver.version << " Status: " << ver.status << "\n";
-        }
-        std::cout << "Descriptions:\n";
-        for (const auto& desc : pkg.descriptions) {
-            std::cout << "  - " << desc << "\n";
-        }
-        std::cout << "Problem Types:\n";
-        for (const auto& prob : pkg.problemTypes) {
-            std::cout << "  - Description: " << prob.description;
-            if (!prob.cweId.empty()) {
-                std::cout << " CWE ID: " << prob.cweId;
-            }
-            std::cout << "\n";
-        }
 }
 
 // Функция для записи данных в файл
@@ -338,47 +303,8 @@ int compareVersions(const std::string& versionCve, const std::string& versionSys
     return 3;
 }
 
-// Удаление символов до : включительно
-std::string removeUpToColon(const std::string& input) {
-    std::string result = input;
-    size_t colonPos = result.find(':');
-    if (colonPos != std::string::npos) {
-        result = result.substr(colonPos + 1);  // Обрезаем строку начиная с символа после двоеточия
-    }
-    return result;
-} 
-
-std::string extractVersionNew(const std::string& versionString) {
-    // Регулярное выражение для поиска основной части версии
-    std::regex versionRegex(R"(\b(\d+\.\d+(?:\.\d+)?)\b)");
-    std::smatch match;
-
-    // Ищем первую подходящую версию
-    if (std::regex_search(versionString, match, versionRegex)) {
-        // Возвращаем найденную версию
-        return match.str(0);
-    }
-
-    return "";  // Возвращаем пустую строку, если версия не найдена
-}
-
-std::vector<std::string> extractVersions(const std::string& input) {
-    std::vector<std::string> versions;
-    std::regex versionPattern(R"((\d+(\.\d+)+))");
-    std::smatch match;
-    std::string::const_iterator searchStart(input.cbegin());
-
-    // Ищем все версии в строке и добавляем их в массив
-    while (std::regex_search(searchStart, input.cend(), match, versionPattern)) {
-        versions.push_back(match[0]);
-        searchStart = match.suffix().first;
-    }
-
-    return versions;
-}
-
 // Функция для сравнения двух версий
-int compareVersionsTwoVersions(const std::string& version1, const std::string& version2) {
+/*int compareVersionsTwoVersions(const std::string& version1, const std::string& version2) {
     std::istringstream v1(version1);
     std::istringstream v2(version2);
     std::string part1, part2;
@@ -391,10 +317,10 @@ int compareVersionsTwoVersions(const std::string& version1, const std::string& v
         part2.clear();
     }
     return 0; // Если версии равны
-}
+}*/
 
 // Функция для преобразования строки версии в вектор целых чисел
-std::vector<int> versionToVector(const std::string& version) {
+/*std::vector<int> versionToVector(const std::string& version) {
     std::vector<int> versionVector;
     std::string number;
     for (char ch : version) {
@@ -426,44 +352,16 @@ int compareVersionInt(const std::string& v1, const std::string& v2) {
         if (part1 > part2) return 1;
     }
     return 0;
-}
+}*/
 
-// Основная функция для сравнения версии с множеством версий
-int compareVersionWithList(const std::vector<std::string>& versions, const std::string& targetVersion) {
-    bool hasOlder = false;
-    bool hasNewer = false;
-    if (versions.size() == 2) {
-        // Если в списке две версии, это диапазон
-        int compStart = compareVersionInt(targetVersion, versions[0]);
-        int compEnd = compareVersionInt(targetVersion, versions[1]);
-        if (compStart >= 0 && compEnd <= 0) {
-            return 1; // Версия попадает в диапазон
-        }/* else {
-            return 2; // Версия не попадает в диапазон
-        }*/
+void toLowerIfContainsUpper(std::string str) {
+    if (std::any_of(str.begin(), str.end(), ::isupper)) {
+        std::transform(str.begin(), str.end(), str.begin(), ::tolower);
     }
-    for (const auto& version : versions) {
-    	//std::cout << "     2 EASY VERSION LIBRARY in CVE: " << version << std::endl;
-        int comparisonResult = compareVersionsTwoVersions(targetVersion, version);
-        if (comparisonResult == 0) {
-            return 1; // Найдено точное совпадение
-        } else if (comparisonResult < 0) {
-            hasNewer = true; // Найдена более новая версия
-        } else {
-            hasOlder = true; // Найдена более старая версия
-        }
-    }
-    if (hasNewer) {
-        return 2; // Есть более новая версия
-    } else if (hasOlder) {
-        return 0; // Все версии старее
-    }
-    return -1; // Этот случай должен быть невозможным, так как всегда есть хотя бы одна версия
 }
-
 
 // Функция для получения значения product из JSON
-bool isMatch(const json& j, 
+/*bool isMatch(const json& j,
 	const std::string& osName, 
 	const std::string& osVersion, 
 	std::vector<PackageInfo>& lib, 
@@ -477,59 +375,37 @@ bool isMatch(const json& j,
         for (const auto& affectedItem : j["containers"]["cna"]["affected"]) {
             if (affectedItem.contains("product")) {
                 std::string product = affectedItem["product"].get<std::string>();
+                // Проверка на пустоту в продукте
                 if (product.find(osName) != std::string::npos) {
                     std::cout << "Partial product match found: " << product << std::endl;
                     return true;
                 } 
                 for (const auto& pkg : lib) {
-        	    if(product == pkg.name) {
+                    // Приводим названия продуктов к общему регистру
+                    toLowerIfContainsUpper(product);
+                    toLowerIfContainsUpper(pkg.name);
+                    if(product == pkg.name) {
                     	if (affectedItem.contains("versions")) {
-             		    std::string version;
-             		    //std::cout << "Lib - " << pkg.name << " - version " << pkg.version << std::endl;	
-             		    for (const auto& firstAffectedVersionItem : affectedItem["versions"]) {
-         			if (firstAffectedVersionItem.contains("version")) { 
-        			    version = firstAffectedVersionItem["version"].get<std::string>();
-        			    if (version == "unspecified" || version == "0" || version == "") {
-        				if (firstAffectedVersionItem.contains("lessThan")) {
-            				    version = firstAffectedVersionItem["lessThan"].get<std::string>();  
-            				    if (version == "unspecified" || version == "0" || version == "") {
-            					version = "0";
-            				    }   							
-        				} else 
-        				    version = "0";
-        			    }
+                            std::string version;
+                            //std::cout << "Lib - " << pkg.name << " - version " << pkg.version << std::endl;
+                            for (const auto& firstAffectedVersionItem : affectedItem["versions"]) {
+                                if (firstAffectedVersionItem.contains("version")) {
+                                    version = firstAffectedVersionItem["version"].get<std::string>();
+                                        if (version == "unspecified" || version == "0" || version == "") {
+                                            if (firstAffectedVersionItem.contains("lessThan")) {
+                                                version = firstAffectedVersionItem["lessThan"].get<std::string>();
+                                                if (version == "unspecified" || version == "0" || version == "") {
+                                                    version = "0";
+                                                }
+                                            } else
+                                            version = "0";
+                                        }
         			    //std::cout << "  VERSION LIBRARY in CVE: " << version << std::endl;
         			    if (checkResutls(compareVersions(version, pkg.version), version, pkg.version, pkg.name)) {
         				fillPackageInfo(j, cve);
         				    return true;
         			    }
-        			    if (pkg.version.find(':') != std::string::npos) {
-            				std::string withoutDot = removeUpToColon(pkg.version);
-            				if (checkResutls(compareVersions(version, withoutDot), version, withoutDot, pkg.name)) {
-        				    fillPackageInfo(j, cve);
-        				    return true;
-        				}
-            			    }
-            			    // Мягкая привязка
-            			    if (argument == "2") {
-    				    	std::string cveCorrectVersion = extractVersionNew(version);
-    				    	//std::cout << "  EASY VERSION LIBRARY in CVE: " << cveCorrectVersion << std::endl;
-    				    	std::string libCorrectVersion = extractVersionNew(pkg.version);
-    				    	//std::cout << "  EASY VERSION LIBRARY in OS: " << libCorrectVersion << std::endl;
-    				    	if (checkResutls(compareVersions(cveCorrectVersion, libCorrectVersion), version, pkg.version, pkg.name)) {
-        				    fillPackageInfo(j, cve);
-        				    return true;
-        			    	}
-        			    	std::vector<std::string> versions = extractVersions(version);
-        			    	if (checkResutls(compareVersionWithList(versions, libCorrectVersion), version, pkg.version, pkg.name)) {
-        				    fillPackageInfo(j, cve);
-        				    return true;
-        			    	}   
-        			    }					
-    				    //
-    					
     					// ////////////////////////////////////	
-    						
         			    } else if (firstAffectedVersionItem.contains("lessThan")) {
         				version = firstAffectedVersionItem["lessThan"].get<std::string>();
         				if (version == "unspecified" || version == "0" || version == "") {
@@ -540,32 +416,71 @@ bool isMatch(const json& j,
         				    fillPackageInfo(j, cve);
         				    return true;
         				}
-        				if (pkg.version.find(':') != std::string::npos) {
-            				    std::string withoutDot = removeUpToColon(pkg.version);
-            				    if (checkResutls(compareVersions(version, withoutDot), version, withoutDot, pkg.name)) {
-        					fillPackageInfo(j, cve);
-        					return true;
-        				    }
-            				}
-                			// Мягкая привязка
-                			if (argument == "2") {
-    					    std::string cveCorrectVersion = extractVersionNew(version);
-    					    std::string libCorrectVersion = extractVersionNew(pkg.version);
-    					    if (checkResutls(compareVersions(cveCorrectVersion, libCorrectVersion), version, pkg.version, pkg.name)) {
-        				    	fillPackageInfo(j, cve);
-        				    	return true;
-        				    }
-        				    std::vector<std::string> versions = extractVersions(version);
-        				    if (checkResutls(compareVersionWithList(versions, libCorrectVersion), version, pkg.version, pkg.name)) {
-        					fillPackageInfo(j, cve);
-        					return true;
-        				    }  
-        				}
         			} else {
         					std::cout << "\033[33m" << "Version in CVE not finded ??? " << "\033[0m" << std::endl;
         			}
         		    }
                     	}
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}*/
+
+bool isMatch(const json& j,
+	const std::string& osName,
+	const std::string& osVersion,
+	std::vector<PackageInfo>& lib,
+	std::vector<PackageInfo>& cve,
+	const std::string& argument) {
+    // Проверяем, содержится ли информация об "affected"
+    if (j.contains("containers") && j["containers"].contains("cna") && j["containers"]["cna"].contains("affected")) {
+        for (const auto& affected : j["containers"]["cna"]["affected"]) {
+            // Проверяем, содержится ли информация об "product"
+            //if (affectedItem.contains("product")) {
+            if (affected.contains("product")) {
+                std::string product = affected["product"].get<std::string>();
+                // Проверка на пустоту в "product"
+                if (product.find(osName) != std::string::npos) {
+                    std::cout << "Partial product match found: " << product << std::endl;
+                    return true;
+                }
+                for (const auto& pkg : lib) {
+                    // Приводим названия продуктов к общему регистру
+                    toLowerIfContainsUpper(product);
+                    toLowerIfContainsUpper(pkg.name);
+                    if(product == pkg.name) {
+                        // Проверяем, содержится ли информация об "versions"
+                        if (affected.contains("versions")) {
+                            for (const auto& version : affected["versions"]) {
+                                std::cout << "Lib in System is: " << pkg.name << "; \t version: " << pkg.version << std::endl;
+                                std::cout << "Lib in CVE is - " << product << "; \t";
+                                if (version.contains("version")) {
+                                    std::cout << "\033[33m" << "version: " << version["version"] << "\033[0m" << std::endl;
+                                    //std::cout << "\033[33m" << "A LIBRARY - " << name << "- VERSION - " << versionLib << " - passed the test successfully. In CVE findede version - "  << versionCve << "\033[0m" << std::endl;
+                                    //return true;
+                                }
+                                if (version.contains("lessThan")) {
+                                    std::cout << "\033[33m" << "lessThan: " << version["lessThan"] << "\033[33m" << std::endl;
+                                    //return true;
+                                }
+                                if (version.contains("lessThanOrEqual")) {
+                                    std::cout << "\033[33m" << "lessThanOrEqual: " << version["lessThanOrEqual"] << "\033[33m" << std::endl;
+                                    //return true;
+                                }
+                                if (version.contains("changes")) {
+                                    for (const auto& change : version["changes"]) {
+                                        if (change.contains("at")) {
+                                            std::cout << "\033[32m" << "Patch at: " << change["at"] << "\033[32m" << std::endl;
+                                            //return true;
+                                        }
+                                    }
+                                }
+                            }
+                            return true;
+                        }
                     }
                 }
             }
@@ -585,11 +500,9 @@ void processDirectory(const fs::path& inputDir,
     if (!fs::exists(outputDir)) {
         fs::create_directories(outputDir);
     }
-
     for (const auto& entry : fs::recursive_directory_iterator(inputDir)) {
         if (entry.is_regular_file() && entry.path().extension() == ".json") {
             std::ifstream inputFile(entry.path());
-            //std::cout << "PATH: " << entry.path() << std::endl;
             if (!inputFile) {
                 std::cerr << "Cannot open file: " << entry.path() << std::endl;
                 continue;
@@ -606,7 +519,6 @@ void processDirectory(const fs::path& inputDir,
                 fs::path destFile = outputDir / entry.path().filename();
                 fs::copy_file(entry.path(), destFile, fs::copy_options::overwrite_existing);
                 std::cout << "Copied file: " << entry.path() << " to " << destFile << std::endl;
-                //showDataCve(cve.back());
                 std::cout << "№" << ++globalCount << " -----------------------------------------------------------" << std::endl;
             }
         }
@@ -618,10 +530,38 @@ int main(int argc, char* argv[]) {
         std::cout << "Select the further way (number) of the program operation in argument programm: " << std::endl;
     	std::cout << " 1 - Hard version binding (Specific system) " << std::endl;
     	std::cout << " 2 - Soft version binding (Suitable for all systems) " << std::endl;
+    	std::cout << " 3 - Download Data Base CVE " << std::endl;
         return 1; // Возвращаем код ошибки
     }
 
     std::string argument = argv[1];
+    
+    if (argument == "3") {
+    	const std::string url = "https://github.com/CVEProject/cvelistV5/archive/refs/heads/main.zip";
+    	// Получаем путь к текущему исполняемому файлу
+	fs::path execPath = fs::current_path();
+    	const std::string outputPath = (execPath / "main.zip").string();
+    	// Запускаем анимацию в отдельном потоке
+    	std::cout << "Database loading speed depends on your internet connection" << std::endl;
+    	std::cout << "The update may take several minutes" << std::endl;
+    	std::thread loadingThread(showLoadingAnimation);
+    	// Скачиваем ZIP-файл
+    	if (downloadFile(url, outputPath)) {
+    		// Останавливаем анимацию загрузки
+    		loadingThread.detach(); // Отсоединяем поток
+    		std::cout << "\rDownload complete.                     " << std::endl;
+    		// Распаковываем ZIP-файл
+        	unzipFile(outputPath);
+        	std::cout << "Data base CVE was update successfull" << std::endl;
+    	} else {
+    		// Останавливаем анимацию загрузки
+    		loadingThread.detach(); // Отсоединяем поток
+    		std::cout << "\rDownload complete.                     " << std::endl;
+    		std::cerr << "Data base CVE NOT UPDATE ! \n Check your connect with Ethernet" << std::endl;
+	}
+    	return 0;
+    }
+    
     
     std::string osName, osVersion;
     if (getOSVersion(osName, osVersion)) {
