@@ -18,7 +18,11 @@
 
 // g++ -o cve main.cpp  -lcurl
 // ./cve 1 (3) 
-
+// Алгоритм !
+// 1 - сравнить версию с "changes":"at". И если точно попали то уязвимости нет. Если не точно, то переходим ко 2 пункту.
+// 2 - сравнить версию с "versions":"lessThan" или с "versions":"lessThanEqual ?". Если меньше то уязвимость, если больше здоровый. Если lessThan нет, то пункт 3. 
+// 3 - сравнить версию с "versions":"version". Если нашли точное значение или попали в диапазон, то уязвимость. Если нет то пункт 4.
+// 4 - скопировать файл .json в директорию для указания пользователю проверить его в ручную. 
 
 namespace fs = std::filesystem;
 using json = nlohmann::json;
@@ -439,12 +443,11 @@ bool isMatch(const json& j,
     if (j.contains("containers") && j["containers"].contains("cna") && j["containers"]["cna"].contains("affected")) {
         for (const auto& affected : j["containers"]["cna"]["affected"]) {
             // Проверяем, содержится ли информация об "product"
-            //if (affectedItem.contains("product")) {
             if (affected.contains("product")) {
                 std::string product = affected["product"].get<std::string>();
                 // Проверка на пустоту в "product"
                 if (product.find(osName) != std::string::npos) {
-                    std::cout << "Partial product match found: " << product << std::endl;
+                    //std::cout << "Partial product match found: " << product << std::endl;
                     return true;
                 }
                 for (const auto& pkg : lib) {
@@ -455,26 +458,25 @@ bool isMatch(const json& j,
                         // Проверяем, содержится ли информация об "versions"
                         if (affected.contains("versions")) {
                             for (const auto& version : affected["versions"]) {
-                                std::cout << "Lib in System is: " << pkg.name << "; \t version: " << pkg.version << std::endl;
-                                std::cout << "Lib in CVE is - " << product << "; \t";
+                                //std::cout << "Lib in System is: " << pkg.name << "; \t version: " << pkg.version << std::endl;
+                                //std::cout << "Lib in CVE is - " << product << "; \t";
                                 if (version.contains("version")) {
-                                    std::cout << "\033[33m" << "version: " << version["version"] << "\033[0m" << std::endl;
-                                    //std::cout << "\033[33m" << "A LIBRARY - " << name << "- VERSION - " << versionLib << " - passed the test successfully. In CVE findede version - "  << versionCve << "\033[0m" << std::endl;
-                                    //return true;
+                                    //std::cout << "\033[33m" << "version: " << version["version"] << "\033[0m" << std::endl;
+                                    //std::cout << version["version"] << std::endl;
                                 }
                                 if (version.contains("lessThan")) {
-                                    std::cout << "\033[33m" << "lessThan: " << version["lessThan"] << "\033[33m" << std::endl;
-                                    //return true;
+                                    //std::cout << "\033[33m" << "lessThan: " << version["lessThan"] << "\033[33m" << std::endl;
+                                    //std::cout << version["lessThan"] << std::endl;
                                 }
                                 if (version.contains("lessThanOrEqual")) {
-                                    std::cout << "\033[33m" << "lessThanOrEqual: " << version["lessThanOrEqual"] << "\033[33m" << std::endl;
-                                    //return true;
+                                    //std::cout << "\033[33m" << "lessThanOrEqual: " << version["lessThanOrEqual"] << "\033[33m" << std::endl;
+                                    //std::cout << version["lessThanOrEqual"] << std::endl;
                                 }
                                 if (version.contains("changes")) {
                                     for (const auto& change : version["changes"]) {
                                         if (change.contains("at")) {
-                                            std::cout << "\033[32m" << "Patch at: " << change["at"] << "\033[32m" << std::endl;
-                                            //return true;
+                                            //std::cout << "\033[32m" << "Patch at: " << change["at"] << "\033[32m" << std::endl;
+                                            std::cout << change["at"] << std::endl;
                                         }
                                     }
                                 }
@@ -518,8 +520,8 @@ void processDirectory(const fs::path& inputDir,
             if (isMatch(j, osName, osVersion, lib, cve, argument)) {
                 fs::path destFile = outputDir / entry.path().filename();
                 fs::copy_file(entry.path(), destFile, fs::copy_options::overwrite_existing);
-                std::cout << "Copied file: " << entry.path() << " to " << destFile << std::endl;
-                std::cout << "№" << ++globalCount << " -----------------------------------------------------------" << std::endl;
+                //std::cout << "Copied file: " << entry.path() << " to " << destFile << std::endl;
+                //std::cout << "№" << ++globalCount << " -----------------------------------------------------------" << std::endl;
             }
         }
     }
@@ -574,9 +576,9 @@ int main(int argc, char* argv[]) {
     std::vector<PackageInfo> packages = getInstalledPackages();
     std::vector<PackageInfo> cve;
 
-    std::cout << "Installed packages and their versions:" << std::endl;
+    //std::cout << "Installed packages and their versions:" << std::endl;
     for (const auto& pkg : packages) {
-        std::cout << pkg.name << " " << pkg.version << std::endl;
+        //std::cout << pkg.name << " " << pkg.version << std::endl;
     }
 
     fs::path inputDir = "cvelistV5-main/cves";
