@@ -1,0 +1,475 @@
+[
+    {"text": "openssl 1.0.1u", "versions": ["1.0.1u"]},
+    {"text": "Fixed in systemd v252-rc1", "versions": ["252-rc1"]},
+    {"text": "from v221 to v239",
+    	"ranges": [
+		{
+       			"lower_bound": "221",
+                	"upper_bound": "239",
+                	"lower_strict": false,
+                	"upper_strict": false
+            	}
+            ]
+    },
+    {"text": "n/a", "versions": ["0"]},
+    {"text": "9.07", "versions": ["9.07"]},
+    {"text": "2.0.0", "versions": ["2.0.0"]},
+    {"text": "v237", "versions": ["237"]},
+    {"text": "from 7.59.0 to 7.61.1",
+    	"ranges": [
+		{
+       			"lower_bound": "7.59.0",
+                	"upper_bound": "7.61.1",
+                	"lower_strict": false,
+                	"upper_strict": false
+            	}
+            ]
+    },
+    {"text": "through v240", "versions": ["240"]},
+    {"text": "9.3 - 10",
+   	"ranges": [
+		{
+       			"lower_bound": "9.3",
+                	"upper_bound": "10",
+                	"lower_strict": false,
+                	"upper_strict": false
+            	}
+            ]
+    },
+    {"text": "9.3.x before 9.3.21",
+       	"ranges": [
+		{
+       			"lower_bound": "9.3.0",
+                	"upper_bound": "9.3.21",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	}
+            ]
+    },
+    {"text": "postgresql 10.4", "versions": ["10.4"]},
+    {"text": "prior to 234",
+	"ranges": [
+		{
+       			"lower_bound": "0",
+                	"upper_bound": "234",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	}
+            ]
+    },
+    {"text": "SSSD 1.16.3", "versions": ["1.16.3"]},
+    {"text": "before 5.51",        	
+    	"ranges": [
+		{
+       			"lower_bound": "0",
+                	"upper_bound": "5.51",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	}
+            ]
+    },
+    {"text": "fuse 2.9.8", "versions": ["2.9.8"]},
+    {"text": "curl 7.54.0", "versions": ["7.54.0"]},
+    {"text": "< 2.3.15",     	
+    	"ranges": [
+		{
+       			"lower_bound": "0",
+                	"upper_bound": "2.3.15",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	}
+            ]
+    },
+    {"text": "2.3.12 and newer", "versions": ["2.3.12"]},
+    {"text": "2.27 through 2.29.2",     	
+    	"ranges": [
+		{
+       			"lower_bound": "2.27",
+                	"upper_bound": "2.29.2",
+                	"lower_strict": false,
+                	"upper_strict": false
+            	}
+            ]
+    },
+    {"text": "starting with v1.4; before v2.1.1",    	
+   	 "ranges": [
+		{
+       			"lower_bound": "1.4",
+                	"upper_bound": "2.1.1",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	}
+            ]
+    },
+    {"text": "10.x before 10.1, 9.6.x before 9.6.6, 9.5.x before 9.5.10, 9.4.x before 9.4.15, 9.3.x before 9.3.20, 9.2.x before 9.2.24",    	 
+    	"ranges": [
+		{
+       			"lower_bound": "10.0",
+                	"upper_bound": "10.1",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	},
+            	{
+       			"lower_bound": "9.6.0",
+                	"upper_bound": "9.6.6",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	},
+            	{
+       			"lower_bound": "9.5.0",
+                	"upper_bound": "9.5.10",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	},
+            	{
+       			"lower_bound": "9.4.0",
+                	"upper_bound": "9.4.15",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	}
+            ]
+    },
+    {"text": "7.19.7-53", "versions": ["7.19.7-53"]},
+    {"text": "up to and including 0.17.0",    	 
+    	"ranges": [
+		{
+       			"lower_bound": "0",
+                	"upper_bound": "0.17.0",
+                	"lower_strict": false,
+                	"upper_strict": false
+            	}
+            ]
+    },
+    {"text": "unzip 6.0", "versions": ["6.0"]},
+    {"text": ">= 1.17.73, < 1.20.108",     	
+    	"ranges": [
+		{
+       			"lower_bound": "1.17.73",
+                	"upper_bound": "1.20.108",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	}
+            ]
+    },
+    {"text": ">= 2.14.2, <= 2.17.62.17.6",    	
+    	"ranges": [
+		{
+       			"lower_bound": "2.14.2",
+                	"upper_bound": "2.17.62.17.6",
+                	"lower_strict": false,
+                	"upper_strict": false
+            	}
+            ]
+    },
+    {"text": "Affects v9.6 to v14",     	
+    	"ranges": [
+		{
+       			"lower_bound": "9.6",
+                	"upper_bound": "14.0",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	}
+            ]
+    },
+    {"text": "0", "versions": ["0"]},
+    {"text": "libxml2 2.9.11", "versions": ["2.9.11"]},
+    {"text": "Fixed in - 5.61 and above.", 
+    	"ranges": [
+		{
+       			"lower_bound": "0",
+                	"upper_bound": "5.61",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	}
+            ]
+    },
+    {"text": "0.6.55-0ubuntu12~20.04", "versions": ["0.6.55-0ubuntu12~20.04"]},
+    {"text": "0.6.55-0ubuntu13", "versions": ["0.6.55-0ubuntu13"]},
+    {"text": "Fixed in util-linux v2.37.3",     	
+    	"ranges": [
+		{
+       			"lower_bound": "0",
+                	"upper_bound": "2.37.3",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	}
+            ]
+    },
+    {"text": "gcc 11.2.0", "versions": ["11.2.0"]},
+    {"text": "GNU Binutils version before and including 2.36",     	
+    	"ranges": [
+		{
+       			"lower_bound": "0",
+                	"upper_bound": "2.36",
+                	"lower_strict": false,
+                	"upper_strict": false
+            	}
+            ]
+    },
+    {"text": "Fixedin v13.4, v12.8, v11.13", "versions": ["13.4", "12.8", "11.13"]},
+    {"text": "sssd 2.6.0", "versions": ["2.6.0"]},
+    {"text": "Fixed in v251-rc1", "versions": ["251-rc1"]},
+    {"text": "ghostpdl 9.55.0", "versions": ["9.55.0"]},
+    {"text": "udisks-2.9.4", "versions": ["2.9.4"]},
+    {"text": "rpm 4.17.0-alpha", "versions": ["4.17.0-alpha"]},
+    {"text": "GNU binutils version 2.36", "versions": ["2.36"]},
+    {"text": "gnome-shell downstream versions using CAP_SYS_NICE", "versions": ["0"]},
+    {"text": "postgresql 13.2, postgresql 12.6, postgresql 11.11", "versions": ["13.2", "12.6", "11.11"]},
+    {"text": "all versions", "versions": ["all"]},
+    {"text": "binutils 2.35.2", "versions": ["2.35.2"]},
+    {"text": "1.33 and earlier",     	
+    	"ranges": [
+		{
+       			"lower_bound": "0",
+                	"upper_bound": "1.33",
+                	"lower_strict": false,
+                	"upper_strict": false
+            	}
+            ]
+    },
+    {"text": "cifs-utils 6.13", "versions": ["6.13"]},
+    {"text": "gnome-shell 3.32.2-40.el8", "versions": ["3.32.2-40.el8"]},
+    {"text": "= 5.58", "versions": ["5.58"]},
+    {"text": "colord - 1.4.4, 1.4.5", "versions": ["1.4.4", "1.4.5"]},
+    {"text": "through 2011-09-11", "versions": ["0"]},
+    {"text": "All versions", "versions": ["all"]},
+    {"text": "fixed in 2.1.0", "versions": ["2.1.0"]},
+    {"text": "< 3.7.1",     	
+    	"ranges": [
+		{
+       			"lower_bound": "0",
+                	"upper_bound": "3.7.1",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	}
+            ]
+    },
+    
+    {"text": "1.1.1+bzr982-0ubuntu14", "versions": ["1.1.1+bzr982-0ubuntu14"]},
+    {"text": "1:13.99.3-1", "versions": ["1:13.99.3-1"]},
+    {"text": "before v245-rc1",     	
+    	"ranges": [
+		{
+       			"lower_bound": "0",
+                	"upper_bound": "245-rc1",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	}
+            ]
+    },
+    
+    {"text": "Red Hat Enterprise Linux 8 versions prior to 8.2", 	
+    	"ranges": [
+		{
+       			"lower_bound": "0",
+                	"upper_bound": "8.2",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	}
+            ]
+    },
+    {"text": "rsync 3.2.4", "versions": ["3.2.4"]},
+    {"text": "xdg-utils-1.1.0-rc1", "versions": ["xdg-utils-1.1.0-rc1"]},
+    {"text": "spice-vdagent versions prior and including 0.20",     	
+    	"ranges": [
+		{
+       			"lower_bound": "0",
+                	"upper_bound": "0.20",
+                	"lower_strict": false,
+                	"upper_strict": false
+            	}
+            ]
+    },
+    {"text": "All PostgreSQL versions before 13.1, before 12.5, before 11.10, before 10.15, before 9.6.20 and before 9.5.24",     	"ranges": [
+		{
+       			"lower_bound": "0.0",
+                	"upper_bound": "13.1",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	},
+            	{
+       			"lower_bound": "0.0",
+                	"upper_bound": "12.5",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	},
+            	{
+       			"lower_bound": "0.0",
+                	"upper_bound": "11.10",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	},
+            	{
+       			"lower_bound": "0.0",
+                	"upper_bound": "10.15",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	},
+            	{
+       			"lower_bound": "0.0",
+                	"upper_bound": "9.6.20",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	},
+            	{
+       			"lower_bound": "0.0",
+                	"upper_bound": "9.5.24",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	}
+            ]
+    },
+    {"text": "spice-vdagent versions 0.20 and prior",     	
+    	"ranges": [
+		{
+       			"lower_bound": "0",
+                	"upper_bound": "0.20",
+                	"lower_strict": false,
+                	"upper_strict": false
+            	}
+            ]
+    },
+    {"text": "1:8.0", "versions": ["1:8.0"]},
+    {"text": "all versions of fwupd", "versions": ["all"]},
+    {"text": "4.10.0-PRE-GIT", "versions": ["4.10.0-PRE-GIT"]},
+    {"text": "Fixed 3.14.0", "versions": ["3.14.0"]},
+    {"text": "<= 1.7.5", "versions": ["1.7.5"]},
+    {"text": "before 1:7.6+12",     	"ranges": [
+		{
+       			"lower_bound": "0",
+                	"upper_bound": "1:7.6+12",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	}
+            ]
+    },
+    {"text": "All versions (At least as of date 2018-09-16)", "versions": ["all"]},
+    {"text": "all versions of ghostscript 9.x before 9.28",
+        "ranges": [
+            {
+                "lower_bound": "9.0",
+                "upper_bound": "9.28",
+                "lower_strict": false,
+                "upper_strict": true
+            }
+        ]
+    },
+    {"text": "All cpio versions before 2.13",
+        "ranges": [
+            {
+             	"lower_bound": "0.0",
+                "upper_bound": "2.13",
+                "lower_strict": false,
+                "upper_strict": true
+            }
+        ]
+    },
+    {"text": "all ghostscript versions 9.x before 9.50",
+        "ranges": [
+            {
+                "lower_bound": "9.0",
+                "upper_bound": "9.50",
+                "lower_strict": false,
+                "upper_strict": true
+            }
+        ]
+    },
+    {"text": "since 3.15.91",
+        "ranges": [
+            {
+                "lower_bound": "3.15.91",
+                "lower_strict": false
+            }
+        ]
+    },
+    {"text": "11.x up to, excluding 11.3",
+        "ranges": [
+            {
+                "lower_bound": "11.0",
+                "upper_bound": "11.3",
+                "lower_strict": false,
+                "upper_strict": false
+            }
+        ]
+    },
+    {"text": "11.x prior to 11.3",
+        "ranges": [
+            {
+                "lower_bound": "11.0",
+                "upper_bound": "11.3",
+                "lower_strict": false,
+                "upper_strict": true
+            }
+        ]
+    },
+    {"text": "all 11.x before 11.5",
+        "ranges": [
+            {
+                "lower_bound": "11.0",
+                "upper_bound": "11.5",
+                "lower_strict": false,
+                "upper_strict": true
+            }
+        ]
+    },
+    {"text": "11.x prior to 11.3",
+        "ranges": [
+            {
+                "lower_bound": "11.0",
+                "upper_bound": "11.3",
+                "lower_strict": false,
+                "upper_strict": true
+            }
+        ]
+    },
+    {"text": "7.52.0 to 7.65.3",
+        "ranges": [
+            {
+                "lower_bound": "7.52.0",
+                "upper_bound": "7.65.3",
+                "lower_strict": false,
+                "upper_strict": false
+            }
+        ]
+    },
+    {"text": "Fixed in 7.65.0", "versions": ["7.65.0"]},
+    {"text": "0d4083e", "versions": ["0d4083e"]},
+    {"text": "openssl 1.0.1u", "versions": ["1.0.1u"]},
+    {"text": "sudo 1.8.18p1","versions": ["1.8.18p1"]},
+    {"text": "all", "versions": ["all"]},
+    {"text": "2.9.x",         
+    	"ranges": [
+            {
+                "lower_bound": "2.9.0",
+                "lower_strict": false
+            }
+        ]
+    },
+    {"text": "unknown","versions": ["0"]},
+    {"text": "affected at least binutils 2.40","versions": ["2.40"]},
+    {"text": "PostgreSQL 15.3, PostgreSQL 14.8, PostgreSQL 13.11, PostgreSQL 12.15, PostgreSQL 11.20", "versions": ["15.3", "14.8", "13.11", "12.15", "11.20"]},
+    {"text": "systemd >= 247",
+        "ranges": [
+            {
+                "lower_bound": "247",
+                "lower_strict": false
+            }
+        ]
+    },
+    {"text": "xdg-utils 1.1.0 to and including 1.1.3",
+        "ranges": [
+            {
+                "lower_bound": "1.1.0",
+                "upper_bound": "1.1.3",
+                "lower_strict": false,
+                "upper_strict": false
+            }
+        ]
+    },
+    {"text": "binutils 2.39-7", "versions": ["2.39-7"]},
+    {"text": "Fixed in systemd v252-rc1", "versions": ["252-rc1"]},
+    {"text": "gnupg2", "versions": ["gnupg2"]},
+    {"text": "uknown", "versions": ["0"]}
+]
+
+

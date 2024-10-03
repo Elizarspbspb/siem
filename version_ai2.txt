@@ -1,0 +1,95 @@
+unspecified
+from v221 to v239
+n/a
+9.07
+2.0.0
+v237
+from 7.59.0 to 7.61.1
+through v240
+9.3 - 10
+9.3.x before 9.3.21
+postegresql 10.4
+prior to 234
+SSSD 1.16.3
+before 5.51
+fuse 2.9.8
+curl 7.54.0
+< 2.3.15
+2.3.12 and newer
+2.27 through 2.29.2
+starting with v1.4; before v2.1.1
+10.x before 10.1, 9.6.x before 9.6.6, 9.5.x before 9.5.10, 9.4.x before 9.4.15, 9.3.x before 9.3.20, 9.2.x before 9.2.24
+7.19.7-53
+up to and including 0.17.0
+unzip 6.0
+>= 1.17.73, < 1.20.108
+>= 2.14.2, < 2.17.62.17.6
+Affects v9.6 to v14
+0
+libxml2 2.9.11
+Fixedin - 5.61 and above.
+0.6.55-0ubuntu12~20.04
+0.6.55-0ubuntu13
+Fixed in util-linux v2.37.3
+gcc 11.2.0
+GNU Binutils version before and including 2.36
+Fixedin v13.4, v12.8, v11.13
+sssd 2.6.0
+Fixed in v251-rc1
+ghostpdl 9.55.0
+udisks-2.9.4
+rpm 4.17.0-alpha
+GNU binutils version 2.36
+gnome-shell downstream versions using CAP_SYS_NICE
+postgresql 13.2, postgresql 12.6, postgresql 11.11
+all versions
+binutils 2.35.2
+1.33 and earlier
+cifs-utils 6.13
+gnome-shell 3.32.2-40.el8
+= 5.58
+colord - 1.4.4, 1.4.5
+through 2011-09-11
+All versions
+fixed in 2.1.0
+< 3.7.1
+1.1.1+bzr982-0ubuntu14
+1:13.99.3-1
+before v245-rc1
+Red Hat Enterprise Linux 8 versions prior to 8.2
+rsync 3.2.4
+xdg-utils-1.1.0-rc1
+spice-vdagent versions prior and including 0.20
+All PostgreSQL versions before 13.1, before 12.5, before 11.10, before 10.15, before 9.6.20 and before 9.5.24
+spice-vdagent versions 0.20 and prior
+1:8.0
+all verions of fwupd
+4.10.0-PRE-GIT
+Fixed 3.14.0
+<= 1.7.5
+before 1:7.6+12
+All versions (At least as of date 2018-09-16)
+all versions of ghostscript 9.x before 9.28
+All cpio versions before 2.13
+all ghostscript versions 9.x before 9.50
+since 3.15.91
+11.x up to, excluding 11.3
+11.x prior to 11.3
+all 11.x before 11.5
+11.x prior to 11.3
+7.52.0 to 7.65.3
+Fixed in 7.65.0
+0d4083e
+openssl 1.0.1u
+sudo 1.8.18p1
+all
+2.9.x
+unknown
+affected at least binutils 2.40
+PostgreSQL 15.3, PostgreSQL 14.8, PostgreSQL 13.11, PostgreSQL 12.15, PostgreSQL 11.20
+systemd >= 247
+xdg-utils 1.1.0 to and including 1.1.3
+binutils 2.39-7
+Fixed in systemd v252-rc1
+gnupg2
+uknown
