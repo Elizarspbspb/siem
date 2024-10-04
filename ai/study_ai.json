@@ -13,6 +13,7 @@
     },
     {"text": "n/a", "versions": ["0"]},
     {"text": "9.07", "versions": ["9.07"]},
+    {"text": "239", "versions": ["239"]},
     {"text": "2.0.0", "versions": ["2.0.0"]},
     {"text": "v237", "versions": ["237"]},
     {"text": "from 7.59.0 to 7.61.1",
@@ -468,7 +469,7 @@
     },
     {"text": "binutils 2.39-7", "versions": ["2.39-7"]},
     {"text": "Fixed in systemd v252-rc1", "versions": ["252-rc1"]},
-    {"text": "gnupg2", "versions": ["gnupg2"]},
+    {"text": "gnupg2", "versions": ["2"]},
     {"text": "uknown", "versions": ["0"]}
 ]
 

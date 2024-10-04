@@ -93,3 +93,10 @@ binutils 2.39-7
 Fixed in systemd v252-rc1
 gnupg2
 uknown
+
+
+
+Найти слово от пробела до пробела, в котором есть цифры. Удалить буквы до первой цифры! Сама версия должна начинаться на цифру !
+
+.x автоматически всегда можно заменить на 0
+unspecified, from, from to, to, n/a, before, excluding, including, 

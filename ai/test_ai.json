@@ -1,0 +1,141 @@
+[
+    {"text": "openssl 1.0.1u", "versions": ["1.0.1u"]},
+    {"text": "Fixed in systemd v252-rc1", "versions": ["252-rc1"]},
+    {"text": "from v221 to v239",
+    	"ranges": [
+		{
+       			"lower_bound": "221",
+                	"upper_bound": "239",
+                	"lower_strict": false,
+                	"upper_strict": false
+            	}
+            ]
+    },
+    {"text": "n/a", "versions": ["0"]},
+    {"text": "9.07", "versions": ["9.07"]},
+    {"text": "239", "versions": ["239"]},
+    {"text": "2.0.0", "versions": ["2.0.0"]},
+    {"text": "udisks-2.9.4", "versions": ["2.9.4"]},
+    {"text": "rpm 4.17.0-alpha", "versions": ["4.17.0-alpha"]},
+    {"text": "GNU binutils version 2.36", "versions": ["2.36"]},
+    {"text": "gnome-shell downstream versions using CAP_SYS_NICE", "versions": ["0"]},
+    {"text": "postgresql 13.2, postgresql 12.6, postgresql 11.11", "versions": ["13.2", "12.6", "11.11"]},
+    {"text": "all versions", "versions": ["all"]},
+    {"text": "binutils 2.35.2", "versions": ["2.35.2"]},
+    {"text": "1.33 and earlier",     	
+    	"ranges": [
+		{
+       			"lower_bound": "0",
+                	"upper_bound": "1.33",
+                	"lower_strict": false,
+                	"upper_strict": false
+            	}
+            ]
+    },
+    {"text": "cifs-utils 6.13", "versions": ["6.13"]},
+    {"text": "gnome-shell 3.32.2-40.el8", "versions": ["3.32.2-40.el8"]},
+    {"text": "= 5.58", "versions": ["5.58"]},
+    {"text": "colord - 1.4.4, 1.4.5", "versions": ["1.4.4", "1.4.5"]},
+    {"text": "through 2011-09-11", "versions": ["0"]},
+    {"text": "All versions", "versions": ["all"]},
+    {"text": "fixed in 2.1.0", "versions": ["2.1.0"]},
+    {"text": "< 3.7.1",     	
+    	"ranges": [
+		{
+       			"lower_bound": "0",
+                	"upper_bound": "3.7.1",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	}
+            ]
+    },
+    
+    {"text": "1.1.1+bzr982-0ubuntu14", "versions": ["1.1.1+bzr982-0ubuntu14"]},
+    {"text": "1:13.99.3-1", "versions": ["1:13.99.3-1"]},
+    {"text": "before v245-rc1",     	
+    	"ranges": [
+		{
+       			"lower_bound": "0",
+                	"upper_bound": "245-rc1",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	}
+            ]
+    },
+    
+    {"text": "Red Hat Enterprise Linux 8 versions prior to 8.2", 	
+    	"ranges": [
+		{
+       			"lower_bound": "0",
+                	"upper_bound": "8.2",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	}
+            ]
+    },
+    {"text": "rsync 3.2.4", "versions": ["3.2.4"]},
+    {"text": "xdg-utils-1.1.0-rc1", "versions": ["xdg-utils-1.1.0-rc1"]},
+    {"text": "spice-vdagent versions prior and including 0.20",     	
+    	"ranges": [
+		{
+       			"lower_bound": "0",
+                	"upper_bound": "0.20",
+                	"lower_strict": false,
+                	"upper_strict": false
+            	}
+            ]
+    },
+    {"text": "All PostgreSQL versions before 13.1, before 12.5, before 11.10, before 10.15, before 9.6.20 and before 9.5.24",     	"ranges": [
+		{
+       			"lower_bound": "0.0",
+                	"upper_bound": "13.1",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	},
+            	{
+       			"lower_bound": "0.0",
+                	"upper_bound": "12.5",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	},
+            	{
+       			"lower_bound": "0.0",
+                	"upper_bound": "11.10",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	},
+            	{
+       			"lower_bound": "0.0",
+                	"upper_bound": "10.15",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	},
+            	{
+       			"lower_bound": "0.0",
+                	"upper_bound": "9.6.20",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	},
+            	{
+       			"lower_bound": "0.0",
+                	"upper_bound": "9.5.24",
+                	"lower_strict": false,
+                	"upper_strict": true
+            	}
+            ]
+    },
+    {"text": "spice-vdagent versions 0.20 and prior",     	
+    	"ranges": [
+		{
+       			"lower_bound": "0",
+                	"upper_bound": "0.20",
+                	"lower_strict": false,
+                	"upper_strict": false
+            	}
+            ]
+    },
+    {"text": "1:8.0", "versions": ["1:8.0"]},
+    {"text": "uknown", "versions": ["0"]}
+]
+
+
